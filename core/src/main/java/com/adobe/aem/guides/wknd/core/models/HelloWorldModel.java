@@ -19,6 +19,7 @@ import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_T
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Default;
@@ -48,6 +49,9 @@ public class HelloWorldModel {
     @ValueMapValue
     private String title; // Variable name must match JCR property name exactly
 
+    @ValueMapValue
+    private String text;
+
     private String message;
 
     @PostConstruct
@@ -60,6 +64,14 @@ public class HelloWorldModel {
         message = "Hello World!\n"
                 + "Resource type is: " + resourceType + "\n"
                 + "Current page is:  " + currentPagePath + "\n";
+    }
+
+    public String getTitle() {
+        return StringUtils.isNotBlank(title) ? title : "Default Value here!";
+    }
+
+    public String getText() {
+        return StringUtils.isNotBlank(text) ? text.toUpperCase() : null;
     }
 
     public String getMessage() {
