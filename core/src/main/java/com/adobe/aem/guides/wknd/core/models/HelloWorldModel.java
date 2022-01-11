@@ -36,14 +36,18 @@ import java.util.Optional;
 @Model(adaptables = Resource.class)
 public class HelloWorldModel {
 
-    @ValueMapValue(name=PROPERTY_RESOURCE_TYPE, injectionStrategy=InjectionStrategy.OPTIONAL)
-    @Default(values="No resourceType")
+    @ValueMapValue(name = PROPERTY_RESOURCE_TYPE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "No resourceType")
     protected String resourceType;
 
     @SlingObject
     private Resource currentResource;
     @SlingObject
     private ResourceResolver resourceResolver;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL) // injectionStrategy is optional as the title
+                                                                   // property is not initally set
+    private String title; // Variable name must match JCR property name exactly
 
     private String message;
 
@@ -55,8 +59,8 @@ public class HelloWorldModel {
                 .map(Page::getPath).orElse("");
 
         message = "Hello World!\n"
-            + "Resource type is: " + resourceType + "\n"
-            + "Current page is:  " + currentPagePath + "\n";
+                + "Resource type is: " + resourceType + "\n"
+                + "Current page is:  " + currentPagePath + "\n";
     }
 
     public String getMessage() {
