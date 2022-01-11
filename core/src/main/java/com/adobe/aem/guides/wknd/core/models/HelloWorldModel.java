@@ -22,8 +22,8 @@ import javax.annotation.PostConstruct;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -33,10 +33,10 @@ import com.day.cq.wcm.api.PageManager;
 
 import java.util.Optional;
 
-@Model(adaptables = Resource.class)
+@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class HelloWorldModel {
 
-    @ValueMapValue(name = PROPERTY_RESOURCE_TYPE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(name = PROPERTY_RESOURCE_TYPE)
     @Default(values = "No resourceType")
     protected String resourceType;
 
@@ -45,8 +45,7 @@ public class HelloWorldModel {
     @SlingObject
     private ResourceResolver resourceResolver;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL) // injectionStrategy is optional as the title
-                                                                   // property is not initally set
+    @ValueMapValue
     private String title; // Variable name must match JCR property name exactly
 
     private String message;
